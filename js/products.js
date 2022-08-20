@@ -2,7 +2,6 @@ let categoriesArray = [];
 
 function showCategoriesList(array){
     let htmlContentToAppend = "";
-    console.log(array);
 
     for(let i = 0; i < array.products.length; i++){ 
         let category = array.products[i];
