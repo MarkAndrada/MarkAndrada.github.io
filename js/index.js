@@ -24,6 +24,7 @@ function validacion(){
     }
     else{
         window.location.href ="home.html";
+        localStorage.setItem("Usuario", mail);
     }
     
 
