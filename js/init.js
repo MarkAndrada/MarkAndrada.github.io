@@ -7,6 +7,7 @@ const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 const CAR_URL = "https://japceibal.github.io/emercado-api/cats_products/101.json";
+const USUARIO = localStorage.getItem("Usuario");
 
 let showSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "block";
@@ -39,4 +40,8 @@ let getJSONData = function(url){
         hideSpinner();
         return result;
     });
+}
+
+if(USUARIO !=''){
+  document.getElementById("usuario").innerHTML=USUARIO;
 }
