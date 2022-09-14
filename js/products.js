@@ -8,16 +8,24 @@ const ORDER_BY_PROD_COUNT = "Cant.";
 let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 
+//funcion para redireccionar segun la id del producto al que se le haga clic
+function product_redirect(id) {
+    localStorage.setItem("product_id", id);
+    window.location.href = "product-info.html";
+}
+
+//funcion que muestra las categorias
 function showCategoriesList(array){
     let htmlContentToAppend = "";
 
     for(let i = 0; i < array.length; i++){ 
         let category = array[i];
+        //filtro por el precio minimo y maximo fijandome en los valores que esten en los campos de filtrado por precio
         if (((minCost == undefined) || (minCost != undefined && parseInt(category.cost) >= minCost)) &&
             ((maxCost == undefined) || (maxCost != undefined && parseInt(category.cost) <= maxCost))){
 
                 htmlContentToAppend += `
-                <div class="list-group-item list-group-item-action">
+                <div onclick="product_redirect(`+category.id+`)" class="list-group-item list-group-item-action cursor-active">
                     <div class="row">
                         <div class="col-3">
                             <img src="` + category.image + `" alt="product image" class="img-thumbnail">
@@ -41,9 +49,11 @@ function showCategoriesList(array){
     
 }
 
+//obtengo la catID del localstorage 
 let product_id = localStorage.getItem("catID");
 
 document.addEventListener("DOMContentLoaded", function(e){
+    //llamo a getJSONData con la url ya dada donde se encuentran los json, pasando como parametro el valor ID 
     getJSONData(PRODUCTS_URL+product_id+EXT_TYPE).then(function(resultObj){
         if (resultObj.status === "ok")
         {
@@ -52,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         }
     });
 
+    //limpia los campos de filtrado por precio con el boton de limpiar
     document.getElementById("clearRangeFilter").addEventListener("click", function(){
         document.getElementById("rangeFilterCostMin").value = "";
         document.getElementById("rangeFilterCostMax").value = "";
@@ -61,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function(e){
 
         showCategoriesList(categoriesArray.products);
     });
-    
+  
     document.getElementById("rangeFilterCost").addEventListener("click", function(){
     //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
     //de productos por categoría.
@@ -86,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     });
 });
 
-
+//funcion que se usa para ordenar, uso los criteria para ejecutar uno de los valores en particular
 function sortCategories(criteria, array){
     let result = [];
     if (criteria === ORDER_ASC_BY_COST)
@@ -108,7 +119,7 @@ function sortCategories(criteria, array){
     }
     return result;
 }
-
+//funcion con la que filtro los productos bajo los criterios de precios y los mando a la funcion que los muestra 
 function sortAndShowCategories(sortCriteria, categoriesArray){
     currentSortCriteria = sortCriteria;
 
@@ -121,15 +132,15 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
     //Muestro las categorías ordenadas
     showCategoriesList(currentCategoriesArray);
 }
-
+//boton con el que filtro de manera ascendente por precio
 document.getElementById("sortAsc").addEventListener("click", function(){
     sortAndShowCategories(ORDER_ASC_BY_COST, categoriesArray);
 });
-
+//boton con el que filtro de manera descente por precio
 document.getElementById("sortDesc").addEventListener("click", function(){
     sortAndShowCategories(ORDER_DESC_BY_COST, categoriesArray);
 });
-
+//boton para filtrar por relevancia (cantidad vendida)
 document.getElementById("sortByRel").addEventListener("click", function(){
     sortAndShowCategories(ORDER_BY_PROD_COUNT, categoriesArray);
 });
