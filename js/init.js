@@ -45,3 +45,10 @@ let getJSONData = function(url){
 if(USUARIO !=''){
   document.getElementById("usuario").innerHTML=USUARIO;
 }
+
+
+document.getElementById("Session-Close").addEventListener("click", SessionClose);
+
+function SessionClose(){
+  localStorage.removeItem("Usuario");
+}
