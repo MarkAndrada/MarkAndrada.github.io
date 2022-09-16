@@ -2,8 +2,14 @@ let categoriesArray =[];
 let product_id = localStorage.getItem("product_id");
 
 let htmlContentToAppend = "";
+let htmlContent = "";
 
-//Muestro la informacion de los productos
+function product_redirect(id) {
+    localStorage.setItem("product_id", id);
+    window.location.href = "product-info.html";
+}
+
+//Muestro la informacion de los productos y los productos relacionados
 function showProductInfo(array){
 
     htmlContentToAppend += `<h3 class="mt-4">`+ array.name +`</h3><hr> 
@@ -15,9 +21,16 @@ function showProductInfo(array){
                             for (let i in array.images){
                                 htmlContentToAppend +=`<img src="` + array.images[i] + `" alt="product image" class="img-thumbnail col-sm-3">`;
                             }
+    for(let i=0; i<array.relatedProducts.length; i++){
+        htmlContent += `<div onclick="product_redirect(`+array.relatedProducts[i].id+`)"class="card" style="width: 18rem;"><img src="`+array.relatedProducts[i].image + `
+        " alt="product image" class="img-thumbnail"> <div class="card-body"> <p class="card-text">`+array.relatedProducts[i].name +
+         `</p> </div> </div>`;
+    }
     document.getElementById("product_info_contaider").innerHTML = htmlContentToAppend; 
+    document.getElementById("related_products").innerHTML = htmlContent;
     
 }
+
 
 //Muestro los comentarios hechos 
 function showComments(comments){
