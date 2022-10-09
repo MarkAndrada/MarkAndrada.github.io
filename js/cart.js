@@ -18,7 +18,7 @@ function showCartInfo(array){
     document.getElementById("cart_total_cost").innerHTML=subtotal;
 }
 
-document.getElementById("cart_amount").addEventListener("keypress", function(){
+document.getElementById("cart_amount").addEventListener("input", function(){
     cant = document.getElementById("cart_amount").value;
     subtotal = cant*cost;
     document.getElementById("cart_total_cost").innerHTML=subtotal;
