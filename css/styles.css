@@ -193,3 +193,6 @@ a.custom-card:hover {
 .error {
   color: red;
 }
+tr {
+  border-bottom: 1px solid #ddd;
+}
