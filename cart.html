@@ -46,8 +46,60 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <div style="margin:auto";>
+        <div style="padding-left: 20%; padding-right: 20%; margin:auto;">
+          <h4 class="text-center" style="padding-top: 25px;">Carrito de compras</h4>
+          <h5>Artículos a comprar</h5>
+          <table style="border-collapse: collapse; width: 100%;" class="text-center">
+            <tr style="border-color: black;">
+              <th></th>
+              <th>Nombre</th>
+              <th>Costo</th>
+              <th>Cantidad</th>
+              <th>Subtotal</th>
+            </tr>
+            <tr id="cart-load">
+              <th id="cart_image"></th>
+              <th id="cart_name"></th>
+              <th id="cart_cost"></th>
+              <th><input id="cart_amount" class="form-control" type="number" value=""style="width:25%;margin:auto"></th>
+              <th id="cart_total_cost"></th>
+            </tr>
+          </table>
+          <hr>
+          <h5>Tipo de envío</h5>
+          <div class="d-block my-3">
+            <div class="custom-control custom-radio">
+              <input id="goldradio" name="publicationType" type="radio" class="custom-control-input" checked=""
+                required="">
+              <label class="custom-control-label" for="goldradio">Premium 2 a 5 días(15%)</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="premiumradio" name="publicationType" type="radio" class="custom-control-input" required="">
+              <label class="custom-control-label" for="premiumradio">Express 5 a 8 días (7%)</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="standardradio" name="publicationType" type="radio" class="custom-control-input" required="">
+              <label class="custom-control-label" for="standardradio">Standard 12 a 15 días (5%)</label>
+            </div>
+            <div class="row">
+              <h5 style="margin-top: 20px;">Dirección de envío</h5>
+              <div class="col-md-8 mb-3">
+                <label for="productName">Calle</label>
+                <input type="text" class="form-control" id="productName" value="" name="productName">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="productName">Número</label>
+                <input type="text" class="form-control" id="productName" value="" name="productName">
+              </div>
+              <div class="col-md-8 mb-3">
+                <label for="productName">Esquina</label>
+                <input type="text" class="form-control" id="productName" value="" name="productName">
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
       </div>
     </div>
   </main>
