@@ -65,7 +65,14 @@
   <main>
     <div id="profile_container" class="container">
       <div class="row justify-content-center" style="margin-right: 20%; margin-left: 20%;">
-        <h3 style="margin-top: 20px;">Perfil</h3>
+        <div class="row">
+          <div class="col-md-6 mb-3 text-start">
+            <h3 style="margin-top: 20px;">Perfil</h3>
+          </div>
+          <div class="col-md-6 mb-3 text-end">
+            <img src="img/cars_index.jpg" class="img-thumbnail" width="100" length="100" id="profile_picture">
+          </div>
+        </div>
         <hr>
         <form action="#" method="get" class="row mt-4 needs-validation" novalidate>
           <div class="col-md-6 mb-3">
@@ -89,6 +96,10 @@
           <div class="col-md-6 mb-3">
             <label for="profile_mail" class="form-label">E-mail</label>
             <input type="email" class="form-control" id="profile_mail" value="" name="mail">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="profile_image" class="form-label">Imagen de perfil</label>
+            <input type="file" id="profile_image" name="profile_image" onchange="loadFile(event)">
           </div>
           <div class="col-md-6 mb-3">
             <label for="profile_contact_number" class="form-label">Telefono de contacto*</label>
