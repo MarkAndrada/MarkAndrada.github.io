@@ -9,6 +9,9 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <style>
+    hr{
+      margin-top: 50px;
+    }
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -60,9 +63,41 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div id="profile_container" class="container">
+      <div class="row justify-content-center" style="margin-right: 20%; margin-left: 20%;">
+        <h3 style="margin-top: 20px;">Perfil</h3>
+        <hr>
+        <form action="#" method="get" class="row mt-4 needs-validation" novalidate>
+          <div class="col-md-6 mb-3">
+            <label for="profile_first_name" class="form-label">Primer nombre*</label>
+            <input type="text" class="form-control" id="profile_first_name" value="" name="first_name" required>
+            <div class="invalid-feedback">Debe ingresar un nombre.</div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="profile_second_name" class="form-label">Segundo nombre</label>
+            <input type="text" class="form-control" id="profile_second_name" value="" name="second_name">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="profile_first_surname" class="form-label">Primer apellido*</label>
+            <input type="text" class="form-control" id="profile_first_surname" value="" name="first_surname" required>
+            <div class="invalid-feedback">Debe ingresar un apellido.</div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="profile_second_surname" class="form-label">Segundo apellido</label>
+            <input type="text" class="form-control" id="profile_second_surname" value="" name="second_surname">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="profile_mail" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="profile_mail" value="" name="mail">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="profile_contact_number" class="form-label">Telefono de contacto*</label>
+            <input type="number" class="form-control" id="profile_contact_number" value="" name="contact_number" required>
+            <div class="invalid-feedback">Debe ingresar un número de contacto.</div>
+          </div>
+          <hr>
+          <button class="btn btn-primary" type="submit" id="save_button" onclick="validate()">Guardar cambios</button>
+        </form>
       </div>
     </div>
   </main>
