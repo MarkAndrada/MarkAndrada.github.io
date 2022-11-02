@@ -50,5 +50,5 @@ if(USUARIO !=''){
 document.getElementById("Session-Close").addEventListener("click", SessionClose);
 
 function SessionClose(){
-  localStorage.removeItem("Usuario");
+  localStorage.clear();
 }
