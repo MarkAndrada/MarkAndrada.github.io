@@ -7,7 +7,15 @@ let porcentaje = 0;
 let moneda = "USD";
 let total;
 let id;
-let met_pago = document.getElementById("Contenido");
+let met_pago = document.getElementById("Payment_Selected");
+let tarj_numb = document.getElementById("num_tarjeta");
+let sec_code = document.getElementById("cod_seg");
+let tarj_venc = document.getElementById("vencimiento");
+let acount_num = document.getElementById("num_cuenta");
+let total_cost_text = document.getElementById("totalCostText");
+let comissionText = document.getElementById("comissionText");
+let productCostText = document.getElementById("productCostText");
+let pagoError = document.querySelector('#Payment_Selected + span.error');
 
 
 document.addEventListener("DOMContentLoaded", function(e){
@@ -17,9 +25,32 @@ document.addEventListener("DOMContentLoaded", function(e){
             categoriesArray = resultObj.data;
             showCartInfo(categoriesArray);
             changePorcentage();
-            document.getElementById("productCostText").innerHTML = moneda  + " " + subtotal;
-            document.getElementById("comissionText").innerHTML = moneda + " " + porcentaje;
-            document.getElementById("totalCostText").innerHTML = moneda + " " + total;
+            productCostText.innerHTML = moneda  + " " + subtotal;
+            comissionText.innerHTML = moneda + " " + porcentaje;
+            total_cost_text.innerHTML = moneda + " " + total;
+ 
+                'use strict'
+            
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')
+                console.log(forms)
+            
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)
+                    .forEach(function (form) {
+                        form.addEventListener('submit', function (event) {
+            
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+            
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+                
+
+            
         }
     });
 });
@@ -29,11 +60,14 @@ function showCartInfo(array){
     cant = loadable.count;
     cost = loadable.unitCost;
     subtotal = cant*cost;
-    document.getElementById("cart_image").innerHTML=`<img src=`+loadable.image+` style="max-width:50px";>`;
-    document.getElementById("cart_name").innerHTML=loadable.name;
-    document.getElementById("cart_cost").innerHTML=(loadable.currency +" "+cost);   
-    document.getElementById("cart_amount").value=cant;
-    document.getElementById("cart_total_cost").innerHTML=moneda +" " + subtotal;
+    document.getElementById("cart_table").innerHTML+=`<tr id="cart-load">
+    <th id="cart_image"><img src=`+loadable.image+` style="max-width:50px";></th>
+    <th id="cart_name">`+loadable.name+`</th>
+    <th id="cart_cost">`+(loadable.currency +" "+cost)+`</th>
+    <th><input id="cart_amount" class="form-control" type="number" value="`+cant+`"style="width:25%;margin:auto" required></th>
+    <th id="cart_total_cost">`+moneda +" " + subtotal+`</th>
+  </tr> 
+    `;
 }
 
 function changePorcentage(){
@@ -49,116 +83,66 @@ function changePorcentage(){
     }
     
     total = porcentaje + subtotal;
-    document.getElementById("comissionText").innerHTML = moneda + " " + porcentaje;
-    document.getElementById("totalCostText").innerHTML = moneda + " " + total;
+    comissionText.innerHTML = moneda + " " + porcentaje;
+    total_cost_text.innerHTML = moneda + " " + total;
 
 }
 
-document.getElementById("cart_amount").addEventListener("input", function(){
+document.getElementById("cart_table").addEventListener("input", function(){
     cant = document.getElementById("cart_amount").value;
     subtotal = cant*cost;
     document.getElementById("cart_total_cost").innerHTML= moneda + " " + subtotal;
-    document.getElementById("productCostText").innerHTML = moneda  + " " + subtotal;
+    productCostText.innerHTML = moneda  + " " + subtotal;
     changePorcentage();
-    document.getElementById("comissionText").innerHTML = moneda + " " + porcentaje;
-    document.getElementById("totalCostText").innerHTML = moneda + " " + total;
+    comissionText.innerHTML = moneda + " " + porcentaje;
+    total_cost_text.innerHTML = moneda + " " + total;
 })
 
 
 document.getElementById("finalizar_compra").addEventListener("click", function(){
-    let calle = document.getElementById("calle");
-    let numero = document.getElementById("numero");
-    let esquina = document.getElementById("esquina");
-    let num_tarj = document.getElementById("num_tarjeta");
-    let num_seg= document.getElementById("cod_seg");
-    let venc = document.getElementById("vencimiento");
-    let num_cuen = document.getElementById("num_cuenta");
-    let error_count=0;
-    if(calle.value==""||numero.value==""||esquina.value==""||met_pago.innerHTML == "No ha seleccionado"||cant<=0||((num_tarj.value==""||num_seg.value==""||venc.value=="")||num_cuen.value=="")){
-        if(calle.value==""){
-            let calleError = document.querySelector('#calle + span.error');
-            calleError.textContent = 'Ingresa una calle';
-            calle.style.borderColor = "red";
-            error_count++;
-        }
-        if(numero.value==""){
-            let numeroError = document.querySelector('#numero + span.error');
-            numeroError.textContent = 'Ingresa un numero';
-            numero.style.borderColor = "red";
-            error_count++;
-        }
-        if(esquina.value==""){
-            let esquinaError = document.querySelector('#esquina + span.error');
-            esquinaError.textContent = 'Ingresa una esquina';
-            esquina.style.borderColor = "red";
-            error_count++;
-        }
-        if(met_pago.innerHTML == "No ha seleccionado"){
-            let pagoError = document.querySelector('#Contenido + span.error');
-            pagoError.textContent = 'Debe seleccionar una forma de pago';
-            error_count++;
-        }
-        if(document.getElementById("credit").checked == true){
-            if(num_tarj == ""){
-                let num_tarj_error = document.querySelector('#num_tarjeta + span.error');
-                num_tarj_error.textContent = 'Debe ingresar una tarjeta';
-                error_count++;
-            }
-            if(num_seg == "No ha seleccionado"){
-                let num_seg_error = document.querySelector('#cod_seg + span.error');
-                num_seg_error.textContent = 'Debe ingresar un número de seg';
-                error_count++;
-            }
-            if(venc == "No ha seleccionado"){
-                let venc_error = document.querySelector('#vencimiento + span.error');
-                venc_error.textContent = 'Debe ingresar una fecha';
-                error_count++;
-            }
-        }
-        if(document.getElementById("bank").checked==true){
-            if(num_cuen.innerHTML == "No ha seleccionado"){
-                let num_cuen_error = document.querySelector('#num_cuenta + span.error');
-                num_cuen_error.textContent = 'Debe ingresar una cuenta';
-                error_count++;
-            }
-        }
+    if(met_pago.innerHTML == "No ha seleccionado"){
+        pagoError.textContent = 'Debe seleccionar una forma de pago';
+        return;
     }
-    if(error_count==0){
-        document.getElementById("alert-success").classList.add("show");
-    }
+    pagoError.textContent = '';
 })
 
 document.getElementById("sel_pago").addEventListener("click", function(){
-    if(document.getElementById("credit").checked == true){
-        met_pago.innerHTML = "Tarjeta de credito";
-        document.getElementById("num_tarjeta").disabled =false;
-        document.getElementById("cod_seg").disabled =false;
-        document.getElementById("vencimiento").disabled =false;
-        document.getElementById("num_cuenta").disabled =true;
-    }
-    if(document.getElementById("bank").checked==true){
-        met_pago.innerHTML = "Transferencia bancaria";
-        document.getElementById("num_tarjeta").disabled =true;
-        document.getElementById("cod_seg").disabled =true;
-        document.getElementById("vencimiento").disabled =true;
-        document.getElementById("num_cuenta").disabled =false;
-    }
+    met_pago.innerHTML = "Tarjeta de credito";
+    tarj_numb.disabled =false;
+    sec_code.disabled =false;
+    tarj_venc.disabled =false;
+    acount_num.disabled =true;
+    pagoError.textContent = '';
 })
 
+function validateAmountAndSelectedPayment(){
+    let cant = document.getElementById("cart_amount");
+    cant.setCustomValidity(cant.value<=0 || cant.value=='' ? "La cantidad debe ser mayor a 0": "");
+    met_pago.setCustomValidity(met_pago.innerHTML == "No ha seleccionado" ? "Seleccione un metodo de pago":"");
+}
 
 document.getElementById("credit").addEventListener("click", function(){
     met_pago.innerHTML = "Tarjeta de credito";
-    document.getElementById("num_tarjeta").disabled =false;
-    document.getElementById("cod_seg").disabled =false;
-    document.getElementById("vencimiento").disabled =false;
-    document.getElementById("num_cuenta").disabled =true;
+    tarj_numb.disabled =false;
+    sec_code.disabled =false;
+    tarj_venc.disabled =false;
+    acount_num.disabled =true;
+    tarj_numb.required = true;
+    sec_code.required =true;
+    tarj_venc.required =true;
+    acount_num.required =false;
+
 })
 document.getElementById("bank").addEventListener("click", function(){
     met_pago.innerHTML = "Transferencia bancaria";
-    document.getElementById("num_tarjeta").disabled =true;
-    document.getElementById("cod_seg").disabled =true;
-    document.getElementById("vencimiento").disabled =true;
-    document.getElementById("num_cuenta").disabled =false;
+    tarj_numb.disabled =true;
+    sec_code.disabled =true;
+    tarj_venc.disabled =true;
+    acount_num.disabled =false;
+    tarj_numb.required = false;
+    sec_code.required =false;
+    tarj_venc.required =false;
+    acount_num.required =true;
+
 })
-
-
